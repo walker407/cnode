@@ -1,11 +1,9 @@
 #include "node.h"
 #include <stdio.h>
 
-DECLARE_NODE(float,float)
-
 int main()
 {
-    NODE_T(float,float) *node1 = CREATE_NODE(float,float)(10,1,COMPUTE_FUNC_T(AVG,float,float));
+    NODE_T(float,float) *node1 = CREATE_NODE(float,float)(10,1,COMPUTE_FUNC_T(SUM,float,float));
 
     for(uintmax_t i=0;i<node1->in->len;i++)
     {
@@ -25,7 +23,7 @@ int main()
     }
     printf("\n");
 
-    NODE_T(float,float) *node2 = CREATE_NODE(float,float)(100,1,COMPUTE_FUNC_T(SUM,float,float));
+    NODE_T(float,float) *node2 = CREATE_NODE(float,float)(100,1,COMPUTE_FUNC_T(AVG,float,float));
 
     for(uintmax_t i=0;i<node2->in->len;i++)
     {
@@ -45,6 +43,7 @@ int main()
     }
 
     FREE_NODE(float,float)(node1);
-
+    FREE_NODE(float,float)(node2);
+    
     return 0;
 }

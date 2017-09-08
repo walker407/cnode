@@ -12,4 +12,4 @@ expand:
 
 .PHONY: clean
 clean:
-	rm node.o func.o main.o func.o node.h.gch func.h.gch
+	rm -f *.o *.h.gch app

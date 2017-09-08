@@ -1,39 +1,20 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                            //
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma once
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                            //
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#ifndef FUNC_H
+#define FUNC_H
+
+#include "types.h"
+
 #define COMPUTE_FUNC_T(NAME,TYPE_IN,TYPE_OUT) TYPE_IN##_##TYPE_OUT##_##NAME##_COMPUTE
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                            //
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define DEFINE_SUM_COMPUTE_FUNC(TYPE_IN,TYPE_OUT)   \
-COMPUTE_FUNC(SUM,TYPE_IN,TYPE_OUT)                  \
-{                                                   \
-    for(uintmax_t i=0;i<out->len;i++)               \
-    {                                               \
-        out->data[i] = 0;                           \
-        for(uintmax_t j=0;j<in->len;j++)            \
-        {                                           \
-          out->data[i]+=in->data[j];                \
-        }                                           \
-    }                                               \
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                            //
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define DEFINE_AVG_COMPUTE_FUNC(TYPE_IN,TYPE_OUT)   \
-COMPUTE_FUNC(AVG,TYPE_IN,TYPE_OUT)                  \
-{                                                   \
-    for(uintmax_t i=0;i<out->len;i++)               \
-    {                                               \
-        out->data[i] = 0;                           \
-        for(uintmax_t j=0;j<in->len;j++)            \
-        {                                           \
-          out->data[i]+=in->data[j];                \
-        }                                           \
-        out->data[i] /= in->len;                    \
-    }                                               \
-}
+
+#define COMPUTE_FUNC(NAME,TYPE_IN,TYPE_OUT) \
+void COMPUTE_FUNC_T(NAME,TYPE_IN,TYPE_OUT)(BUFF_T(TYPE_IN) *in, BUFF_T(TYPE_OUT) *out)
+
+#define DECLARE_COMPUTE_FUNC(NAME,TYPE_IN,TYPE_OUT) \
+COMPUTE_FUNC(NAME,TYPE_IN,TYPE_OUT);
+
+#define DECLARE_FUNC(TYPE_IN,TYPE_OUT)      \
+DECLARE_COMPUTE_FUNC(SUM,TYPE_IN,TYPE_OUT)  \
+DECLARE_COMPUTE_FUNC(AVG,TYPE_IN,TYPE_OUT)
+
+DECLARE_FUNC(float,float)
+
+#endif
